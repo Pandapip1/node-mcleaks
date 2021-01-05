@@ -1,4 +1,4 @@
-const request = require('request')
+const request = require('axios')
 const crypto = require('crypto')
 
 let Client = {}
@@ -45,53 +45,56 @@ Client.mcHexDigest = function(str) {
 /**
  * Redeem an alt token
  */
-Client.redeem = function(options, cb) {
-    var options = {
-        uri: options.uri || 'http://auth.mcleaks.net/v1/redeem',
-        method: 'POST',
-        json: {
-            token: options.token
-        }
+Client.redeem = async function(options, cb) {
+  let response = await axios({
+    method: "POST",
+    url: options.uri || 'https://authserver.thealtening.com/authenticate',
+    data: {
+      agent: {
+        name: "Minecraft",
+        version: 1
+      },
+      username: options.token,
+      password: "yeet_who_needs_passwords",
+      requestUser: true
     }
-
-    request(options, (err, response, body) => {
-        if(!err && !body.success) {
-            err = new Error(`MCLeaks responded '${body.errorMessage}'`)
-        }
-        cb(err, body)
-    })
+  })
+  if (Math.trunc(response.status/200) == 2){
+    return {
+      success: true,
+      accessToken: response.data.accessToken,
+      uuid: response.data.user.id
+    };
+  }
+  return {
+    success: false
+  };
 }
 
 /**
- * Join a server using a mcleaks session
+ * Join a server using a thealtening session
  */
-Client.join = function(options, cb) {
-    let serverhash
-    if(options.serverid && options.sharedsecret && options.serverkey) {
-        serverhash = this.mcHexDigest(crypto.createHash('sha1')
-            .update(options.serverid)
-            .update(options.sharedsecret)
-            .update(options.serverkey)
-            .digest())
-        console.log('making digest')
+Client.join = async function(options, cb) {
+  let serverhash = null;
+  if(options.serverid && options.sharedsecret && options.serverkey) {
+    serverhash = this.mcHexDigest(crypto.createHash('sha1')
+      .update(options.serverid)
+      .update(options.sharedsecret)
+      .update(options.serverkey)
+    .digest())
+  }
+  let response = await axios({
+    method: "POST",
+    url: options.uri || 'https://sessionserver.thealtening.com/session/minecraft/join',
+    data: {
+      accessToken: options.accessToken,
+      uuid: options.uuid.replaceAll("-", ""),
+      serverId: options.serverhash || serverhash
     }
-    var options = {
-        uri: options.uri || 'http://auth.mcleaks.net/v1/joinserver',
-        method: 'POST',
-        json: {
-            session: options.session,
-            mcname: options.mcname,
-            serverhash: options.serverhash || serverhash,
-            server: options.server
-        }
-    }
-
-    request(options, (err, response, body) => {
-        if(!err && !body.success) {
-            err = new Error(`MCLeaks responded '${body.errorMessage}'`)
-        }
-        cb(err, body)
-    })
+  })
+  return {
+    success: Math.trunc(response.status/200) == 2
+  };
 }
 
 module.exports = Client
