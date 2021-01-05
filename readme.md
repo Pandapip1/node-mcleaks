@@ -1,17 +1,17 @@
-# node-mcleaks
+# node-thealtening
 
-An unofficial node wrapper for the official [MCLeaks](https://mcleaks.net/) API
+An unofficial node wrapper for the altening's API
 
 ### Basic Usage:
 ```javascript
-const mcleaks = require('node-mcleaks')
+const thealtening = require('node-thealtening')
 
 // Redeem a token:
-mcleaks.redeem({
-	token: 'GFUGuKqxCDHjdNAz' // get the token from mcleaks
+thealtening.redeem({
+	token: 'tpbcg-0gxoj@alt.com' // get the token from thealtening
 }, (err, data) => {
     if(err) throw err
-    let accdata = data.result // Tokens expire after 15 minutes so save the session somehow
+    let accdata = data.result // Save this
     console.log(`Redeemed ${accdata.mcname}`)
     
     // Join a server:
