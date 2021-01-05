@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git@github.com:Pandapip1/node-thealtening.git"
   },
-  "author": "NaniTanuki and Pandapip1",
+  "author": "pandapip1",
   "license": "MIT",
   "dependencies": {
     "crypto": "0.0.3",
