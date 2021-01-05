@@ -63,7 +63,8 @@ Client.redeem = async function(options, cb) {
     return {
       success: true,
       accessToken: response.data.accessToken,
-      uuid: response.data.user.id
+      uuid: response.data.user.id,
+      user: response.data.user
     };
   }
   return {
