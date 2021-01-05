@@ -1,5 +1,5 @@
 {
-  "name": "@pandapip1/node-thealtening",
+  "name": "node-thealtening",
   "version": "1.0.0",
   "description": "An unofficial node wrapper for thealtening's API",
   "main": "index.js",
