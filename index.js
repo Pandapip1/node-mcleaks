@@ -48,7 +48,7 @@ Client.mcHexDigest = function(str) {
 Client.redeem = async function(options, cb) {
   let response = await axios({
     method: "POST",
-    url: options.uri || 'https://authserver.thealtening.com/authenticate',
+    url: options.uri || 'http://authserver.thealtening.com/authenticate',
     data: {
       agent: {
         name: "Minecraft",
@@ -86,7 +86,7 @@ Client.join = async function(options, cb) {
   }
   let response = await axios({
     method: "POST",
-    url: options.uri || 'https://sessionserver.thealtening.com/session/minecraft/join',
+    url: options.uri || 'http://sessionserver.thealtening.com/session/minecraft/join',
     data: {
       accessToken: options.accessToken,
       uuid: options.uuid.replaceAll("-", ""),
