@@ -59,7 +59,7 @@ Client.redeem = async function(options, cb) {
       requestUser: true
     }
   })
-  if (Math.trunc(response.status/200) == 2){
+  if (Math.trunc(response.status/100) == 2){
     return {
       success: true,
       accessToken: response.data.accessToken,
@@ -89,12 +89,12 @@ Client.join = async function(options, cb) {
     url: options.uri || 'http://sessionserver.thealtening.com/session/minecraft/join',
     data: {
       accessToken: options.accessToken,
-      uuid: options.uuid.replaceAll("-", ""),
+      uuid: options.uuid,
       serverId: options.serverhash || serverhash
     }
   })
   return {
-    success: Math.trunc(response.status/200) == 2
+    success: Math.trunc(response.status/100) == 2
   };
 }
 
