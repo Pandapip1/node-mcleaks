@@ -1,6 +1,6 @@
 {
   "name": "node-thealtening",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An unofficial node wrapper for thealtening's API",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,6 @@
   "author": "pandapip1",
   "license": "MIT",
   "dependencies": {
-    "crypto": "0.0.3",
     "axios": "^0.21.1"
   }
 }
