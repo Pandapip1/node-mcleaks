@@ -45,7 +45,7 @@ Client.mcHexDigest = function(str) {
 /**
  * Redeem an alt token
  */
-Client.redeem = async function(options, cb) {
+Client.redeem = async function(options) {
   let response = await axios({
     method: "POST",
     url: options.uri || 'http://authserver.thealtening.com/authenticate',
@@ -75,7 +75,7 @@ Client.redeem = async function(options, cb) {
 /**
  * Join a server using a thealtening session
  */
-Client.join = async function(options, cb) {
+Client.join = async function(options) {
   let serverhash = null;
   if(options.serverid && options.sharedsecret && options.serverkey) {
     serverhash = this.mcHexDigest(crypto.createHash('sha1')
